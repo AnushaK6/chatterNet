@@ -2,7 +2,7 @@
 
 Realtime chat application server using websockets, with NodeJS along with express js framework and socket.io websocket library.
 
-** Deployed at **: [https://chatternet-vhmq.onrender.com]
+**Deployed at**: [https://chatternet-vhmq.onrender.com]
 Click the above link to view and run the application
 
 ### Features:
