@@ -1,4 +1,4 @@
-const socket = io('ws://localhost:3500')
+const socket = io('https://chatternet-vhmq.onrender.com')
 
 const msgInput = document.querySelector('#msg')
 const activity = document.querySelector('.activity')
