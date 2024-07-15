@@ -21,15 +21,35 @@
 					</div>
 					<div class="form-control">
 						<label for="room">Room</label>
-						<select name="room" id="room" required>
+						<select name="room" id="room" onchange="newCheck()" required>
 							<option value="" disabled selected>Select your option</option>
-							<option value="JavaScript">JavaScript</option>
-							<option value="Python">Python</option>
-							<option value="PHP">PHP</option>
-							<option value="C#">C#</option>
-							<option value="Ruby">Ruby</option>
-							<option value="Java">Java</option>
+							<option value="Chatter">Chatter</option>
+							<option value="Fun">Fun</option>
+							<option value="Discussion">Discussion</option>
+							<option value="Debate">Debate</option>
+							<option value="Study">Study</option>
+							<option value="Outing">Outing</option>
+							<option value="New">Create new room</option>
 						</select>
+						<script>
+							function newCheck(){
+								if(document.getElementById('room').value==="New"){
+									form=document.createElement('div')
+									form.className="form-control new-room"
+									form.innerHTML=`<label for="newroom">Room Name</label>
+											<input type="text" name="newroom" id="newroom" placeholder="Enter room name..." required />`
+									main=document.querySelector('form')
+									console.log(main.childNodes[main.childElementCount])
+									main.insertBefore(form, main.childNodes[main.childElementCount+1])
+								}
+
+								else{
+									if(document.getElementsByClassName('new-room').length>0){
+										document.querySelector('.new-room').remove()
+									}
+								}
+							}
+						</script>
 					</div>
 					<button type="submit" class="btn">Join Chat</button>
 				</form>

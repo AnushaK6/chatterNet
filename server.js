@@ -29,14 +29,14 @@ const io=new Server(expressServer, {
 io.on('connection', socket => {
     console.log(`User ${socket.id} connected`)
     
-    socket.emit('message', buildMsg(ADMIN, 'Welcome to the chat room!'));
+    socket.emit('message', buildMsg(ADMIN, 'Welcome to the chat room!', '...'));
 
     socket.on('enterRoom', ({name, room})=>{
         const prevRoom = getUser(socket.id)?.room
 
         if(prevRoom){
             socket.leave(prevRoom)
-            io.to(prevRoom).emit('message', buildMsg(ADMIN,`${name} has left the room`))
+            io.to(prevRoom).emit('message', buildMsg(ADMIN,`${name} has left the room`, '...'))
         }
 
         const user = activateUser(socket.id, name, room)
@@ -49,9 +49,11 @@ io.on('connection', socket => {
 
         socket.join(user.room)
 
-        socket.emit('message', buildMsg(ADMIN, `You have joined the ${user.room} chat room`))
+        socket.emit('message', buildMsg(ADMIN, `You have joined the ${user.room} chat room`, '...'))
 
-        socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`))
+        socket.emit('userId', socket.id)
+
+        socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`, '...'))
 
         io.to(user.room).emit('userList', {
             users: getUsersInRoom(user.room)
@@ -65,7 +67,7 @@ io.on('connection', socket => {
     socket.on('message', ({name, text})=>{
         const room=getUser(socket.id)?.room
         if(room){
-            io.to(room).emit('message', buildMsg(name, text))
+            io.to(room).emit('message', buildMsg(name, text, socket.id))
         }
     })
 
@@ -74,7 +76,7 @@ io.on('connection', socket => {
         userLeavesApp(socket.id)
 
         if(user){
-            io.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} left the chat`))
+            io.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} left the chat`, '...'))
 
             io.to(user.room).emit('userList', {
                 users:getUsersInRoom(user.room)
@@ -96,10 +98,11 @@ io.on('connection', socket => {
     })
 })
 
-function buildMsg(name, text) {
+function buildMsg(name, text, id) {
     return {
         name,
         text,
+        id,
         time: new Intl.DateTimeFormat('default', {
             hour: 'numeric',
             minute: 'numeric'

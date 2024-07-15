@@ -47,7 +47,7 @@ label{
 	font-size: 1.5em;
 }
 
-#username, #room{
+#username, #room, #newroom{
 	border-radius: 10px;
 	border: none;
 	margin-top: 5px;
@@ -132,6 +132,7 @@ label{
 	padding: 30px;
 	max-height: 40rem;
 	overflow-y: auto;
+	position: relative;
 }
 
 .chat-messages .message {
@@ -152,6 +153,16 @@ label{
 
 .chat-messages .message .meta span {
 	color: #777;
+}
+
+.chat-messages button {
+	position: fixed;
+    bottom: 220px;
+    right: 90px;
+	border: none;
+	border-radius: 10px;
+	padding: 7px;
+	display: none;
 }
 
 .chat-form-container {
