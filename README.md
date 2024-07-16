@@ -10,6 +10,7 @@ Click [here](https://chatternet-vhmq.onrender.com) to view and run the applicati
 - Realtime messaging
 - User connection and disconnection handling
 - Room-based messaging
+- Activity detection
 - Message broadcasting to specific rooms
 - No name clash between users (different users with same name differentiated)
 - Active rooms and users visibility
